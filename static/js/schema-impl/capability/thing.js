@@ -165,11 +165,10 @@ class Thing {
         }
 
         let href;
-        for (const link of property.links) {
-          if (!link.rel || link.rel === 'property') {
-            href = link.href;
+        for (const form of property.forms) {
+            href = form.href           
             break;
-          }
+          
         }
 
         if (!href) {

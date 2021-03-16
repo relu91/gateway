@@ -195,11 +195,8 @@ class ThingModel extends Model {
     };
 
     let href;
-    for (const link of property.links) {
-      if (!link.rel || link.rel === 'property') {
-        href = link.href;
-        break;
-      }
+    for (const form of property.forms) {
+      href = form.href
     }
 
     return API.putJson(href, payload)

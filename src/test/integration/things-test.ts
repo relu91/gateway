@@ -67,9 +67,8 @@ const piDescr = {
       '@type': 'OnOffProperty',
       type: 'boolean',
       value: true,
-      links: [
+      forms: [
         {
-          rel: 'alternate',
           href: '/properties/power',
           proxy: true,
         },
@@ -193,11 +192,10 @@ describe('things/', function () {
     expect(res.body.title).toEqual(thingDescr.title);
 
     // Fix up links
-    delete thingDescr.properties.power.links[0].proxy;
+    delete thingDescr.properties.power.forms[0].proxy;
     // eslint-disable-next-line max-len
-    thingDescr.properties.power.links[0].href = `${Constants.PROXY_PATH}/${thingDescr.id}${thingDescr.properties.power.links[0].href}`;
-    thingDescr.properties.power.links.push({
-      rel: 'property',
+    thingDescr.properties.power.forms[0].href = `${Constants.PROXY_PATH}/${thingDescr.id}${thingDescr.properties.power.forms[0].href}`;
+    thingDescr.properties.power.forms.push({
       href: `${Constants.THINGS_PATH}/${thingDescr.id}${Constants.PROPERTIES_PATH}/power`,
     });
 

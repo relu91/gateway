@@ -140,26 +140,24 @@ export default class Thing extends EventEmitter {
           delete property.href;
         }
 
-        if (property.links) {
-          property.links = property.links
-            .filter((link) => {
-              return link.rel && link.rel !== 'property';
-            })
-            .map((link) => {
-              if (link.proxy) {
-                delete link.proxy;
-                link.href = `${Constants.PROXY_PATH}/${encodeURIComponent(this.id)}${link.href}`;
+        if (property.forms) {
+          property.forms = property.forms
+            .map((form) => {
+              //TODO: proxying is handled differntly in W3C WoT
+              if (form.proxy) {
+                delete form.proxy;
+                form.href = `${Constants.PROXY_PATH}/${encodeURIComponent(this.id)}${form.href}`;
               }
 
-              return link;
+              return form;
             });
         } else {
-          property.links = [];
+          property.forms = [];
         }
 
         // Give the property a URL
-        property.links.push({
-          rel: 'property',
+        // Conservative approach do not remove provided forms
+        property.forms.push({
           href: `${this.href}${Constants.PROPERTIES_PATH}/${encodeURIComponent(propertyName)}`,
         });
 
@@ -643,26 +641,24 @@ export default class Thing extends EventEmitter {
           delete property.href;
         }
 
-        if (property.links) {
-          property.links = property.links
-            .filter((link) => {
-              return link.rel && link.rel !== 'property';
-            })
-            .map((link) => {
-              if (link.proxy) {
-                delete link.proxy;
-                link.href = `${Constants.PROXY_PATH}/${encodeURIComponent(this.id)}${link.href}`;
+        if (property.forms) {
+          property.forms = property.forms
+            .map((form) => {
+              //TODO: proxying is handled differntly in W3C WoT
+              if (form.proxy) {
+                delete form.proxy;
+                form.href = `${Constants.PROXY_PATH}/${encodeURIComponent(this.id)}${form.href}`;
               }
 
-              return link;
+              return form;
             });
         } else {
-          property.links = [];
+          property.forms = [];
         }
 
         // Give the property a URL
-        property.links.push({
-          rel: 'property',
+        // Conservative approach do not remove provided forms
+        property.forms.push({
           href: `${this.href}${Constants.PROPERTIES_PATH}/${encodeURIComponent(propertyName)}`,
         });
         this.properties[propertyName] = property;
