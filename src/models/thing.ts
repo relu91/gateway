@@ -253,25 +253,22 @@ export default class Thing extends EventEmitter {
         delete event.href;
       }
 
-      if (event.links) {
-        event.links = event.links
-          .filter((link) => {
-            return link.rel && link.rel !== 'event';
-          })
-          .map((link) => {
-            if (link.proxy) {
-              delete link.proxy;
-              link.href = `${Constants.PROXY_PATH}/${encodeURIComponent(this.id)}${link.href}`;
+      if (event.forms) {
+        event.forms = event.forms
+          .map((form) => {
+            if (form.proxy) {
+              delete form.proxy;
+              form.href = `${Constants.PROXY_PATH}/${encodeURIComponent(this.id)}${form.href}`;
             }
 
-            return link;
+            return form;
           });
       } else {
-        event.links = [];
+        event.forms = [];
       }
 
       // Give the event a URL
-      event.links.push({
+      event.forms.push({
         rel: 'event',
         href: `${this.href}${Constants.EVENTS_PATH}/${encodeURIComponent(eventName)}`,
       });
@@ -699,25 +696,22 @@ export default class Thing extends EventEmitter {
         delete event.href;
       }
 
-      if (event.links) {
-        event.links = event.links
-          .filter((link) => {
-            return link.rel && link.rel !== 'event';
-          })
-          .map((link) => {
-            if (link.proxy) {
-              delete link.proxy;
-              link.href = `${Constants.PROXY_PATH}/${encodeURIComponent(this.id)}${link.href}`;
+      if (event.forms) {
+        event.forms = event.forms
+          .map((form) => {
+            if (form.proxy) {
+              delete form.proxy;
+              form.href = `${Constants.PROXY_PATH}/${encodeURIComponent(this.id)}${form.href}`;
             }
 
-            return link;
+            return form;
           });
       } else {
-        event.links = [];
+        event.forms = [];
       }
 
       // Give the event a URL
-      event.links.push({
+      event.forms.push({
         rel: 'event',
         href: `${this.href}${Constants.EVENTS_PATH}/${encodeURIComponent(eventName)}`,
       });

@@ -89,9 +89,8 @@ const piDescr = {
   events: {
     reboot: {
       description: 'Going down for reboot',
-      links: [
+      forms: [
         {
-          rel: 'alternate',
           href: '/events/reboot',
           proxy: true,
         },
@@ -205,10 +204,10 @@ describe('things/', function () {
       href: `${Constants.THINGS_PATH}/${thingDescr.id}${Constants.ACTIONS_PATH}/reboot`,
     });
 
-    delete thingDescr.events.reboot.links[0].proxy;
+    delete thingDescr.events.reboot.forms[0].proxy;
     // eslint-disable-next-line max-len
-    thingDescr.events.reboot.links[0].href = `${Constants.PROXY_PATH}/${thingDescr.id}${thingDescr.events.reboot.links[0].href}`;
-    thingDescr.events.reboot.links.push({
+    thingDescr.events.reboot.forms[0].href = `${Constants.PROXY_PATH}/${thingDescr.id}${thingDescr.events.reboot.forms[0].href}`;
+    thingDescr.events.reboot.forms.push({
       rel: 'event',
       href: `${Constants.THINGS_PATH}/${thingDescr.id}${Constants.EVENTS_PATH}/reboot`,
     });
