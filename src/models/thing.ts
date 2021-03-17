@@ -226,26 +226,22 @@ export default class Thing extends EventEmitter {
         delete action.href;
       }
 
-      if (action.links) {
-        action.links = action.links
-          .filter((link) => {
-            return link.rel && link.rel !== 'action';
-          })
-          .map((link) => {
-            if (link.proxy) {
-              delete link.proxy;
-              link.href = `${Constants.PROXY_PATH}/${encodeURIComponent(this.id)}${link.href}`;
+      if (action.forms) {
+        action.forms = action.forms
+          .map((form) => {
+            if (form.proxy) {
+              delete form.proxy;
+              form.href = `${Constants.PROXY_PATH}/${encodeURIComponent(this.id)}${form.href}`;
             }
 
-            return link;
+            return form;
           });
       } else {
-        action.links = [];
+        action.forms = [];
       }
 
       // Give the action a URL
-      action.links.push({
-        rel: 'action',
+      action.forms!.push({
         href: `${this.href}${Constants.ACTIONS_PATH}/${encodeURIComponent(actionName)}`,
       });
     }
@@ -674,26 +670,22 @@ export default class Thing extends EventEmitter {
         delete action.href;
       }
 
-      if (action.links) {
-        action.links = action.links
-          .filter((link) => {
-            return link.rel && link.rel !== 'action';
-          })
-          .map((link) => {
-            if (link.proxy) {
-              delete link.proxy;
-              link.href = `${Constants.PROXY_PATH}/${encodeURIComponent(this.id)}${link.href}`;
+      if (action.forms) {
+        action.forms = action.forms
+          .map((form) => {
+            if (form.proxy) {
+              delete form.proxy;
+              form.href = `${Constants.PROXY_PATH}/${encodeURIComponent(this.id)}${form.href}`;
             }
 
-            return link;
+            return form;
           });
       } else {
-        action.links = [];
+        action.forms = [];
       }
 
       // Give the action a URL
-      action.links.push({
-        rel: 'action',
+      action.forms!.push({
         href: `${this.href}${Constants.ACTIONS_PATH}/${encodeURIComponent(actionName)}`,
       });
     }
