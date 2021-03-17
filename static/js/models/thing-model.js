@@ -216,10 +216,8 @@ class ThingModel extends Model {
     let getPropertiesPromise;
     if (typeof this.propertiesHref === 'undefined') {
       const urls = Object.values(this.propertyDescriptions).map((v) => {
-        for (const link of v.links) {
-          if (!link.rel || link.rel === 'property') {
-            return link.href;
-          }
+        if(v.forms){
+           return v.forms[0]
         }
       });
       const requests = urls.map((u) => API.getJson(u));

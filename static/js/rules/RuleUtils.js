@@ -34,12 +34,7 @@ const RuleUtils = {
       property.id
     )}`;
     const optProp = option.properties[property.id];
-    return (
-      optProp &&
-      optProp.links.filter((l) => {
-        return (!l.rel || l.rel === 'property') && l.href === propHref;
-      }).length > 0
-    );
+    return optProp && optProp.forms &&  optProp.forms.length;
   },
   // Helper function for selecting the thing corresponding to an href
   byThing: (thing) => (otherThing) => {

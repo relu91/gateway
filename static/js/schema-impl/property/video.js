@@ -27,17 +27,17 @@ class VideoDetail {
     this.mjpegHref = null;
     this.player = null;
 
-    for (const link of property.links) {
-      if (link.rel === 'alternate') {
-        if (this.dashHref === null && link.mediaType === 'application/dash+xml') {
-          this.dashHref = link.href;
-        } else if (this.hlsHref === null && link.mediaType === 'application/vnd.apple.mpegurl') {
-          this.hlsHref = link.href;
+    for (const form of property.forms) {
+      if (form.rel === 'alternate') {
+        if (this.dashHref === null && form.mediaType === 'application/dash+xml') {
+          this.dashHref = form.href;
+        } else if (this.hlsHref === null && form.mediaType === 'application/vnd.apple.mpegurl') {
+          this.hlsHref = form.href;
         } else if (
           this.mjpegHref === null &&
-          (link.mediaType === 'video/x-motion-jpeg' || link.mediaType === 'video/x-jpeg')
+          (form.mediaType === 'video/x-motion-jpeg' || form.mediaType === 'video/x-jpeg')
         ) {
-          this.mjpegHref = link.href;
+          this.mjpegHref = form.href;
         }
       }
     }
