@@ -29,13 +29,13 @@ class VideoDetail {
 
     for (const form of property.forms) {
       if (form.rel === 'alternate') {
-        if (this.dashHref === null && form.mediaType === 'application/dash+xml') {
+        if (this.dashHref === null && form.contentType === 'application/dash+xml') {
           this.dashHref = form.href;
-        } else if (this.hlsHref === null && form.mediaType === 'application/vnd.apple.mpegurl') {
+        } else if (this.hlsHref === null && form.contentType === 'application/vnd.apple.mpegurl') {
           this.hlsHref = form.href;
         } else if (
           this.mjpegHref === null &&
-          (form.mediaType === 'video/x-motion-jpeg' || form.mediaType === 'video/x-jpeg')
+          (form.contentType === 'video/x-motion-jpeg' || form.contentType === 'video/x-jpeg')
         ) {
           this.mjpegHref = form.href;
         }

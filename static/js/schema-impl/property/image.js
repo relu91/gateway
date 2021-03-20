@@ -23,7 +23,7 @@ class ImageDetail {
 
     this.imageHref = null;
     for (const form of property.forms) {
-      if (form.rel === 'alternate' && form.mediaType && form.mediaType.startsWith('image/')) {
+      if (form.rel === 'alternate' && form.contentType && form.contentType.startsWith('image/')) {
         this.imageHref = form.href;
         break;
       }
