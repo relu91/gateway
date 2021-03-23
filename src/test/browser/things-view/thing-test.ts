@@ -971,4 +971,52 @@ describe('Thing', () => {
     const detailPage = await things2[0].openDetailPage();
     expect(detailPage).toBeTruthy();
   });
+
+  it('should render camera image and show image', async () => {
+    const browser = getBrowser();
+    const desc = {
+      id: 'Camera',
+      title: 'Camera',
+      '@context': 'https://webthings.io/schemas',
+      '@type': ['Camera'],
+      properties: {
+        photo: {
+          '@type': 'ImageProperty',
+          type: "null",
+          forms:[
+            {
+              
+              href:"https://fakeimg.pl/300/",
+              contentType: "image/jpg"
+            }
+          ]
+        },
+      },
+    };
+    await addThing(desc);
+
+    const thingsPage = new ThingsPage(browser);
+    await thingsPage.open();
+
+    await thingsPage.waitForThings();
+    const things = await thingsPage.things();
+    expect(things.length).toEqual(1);
+    const thingTitle = await things[0].thingTitle();
+    expect(thingTitle).toEqual(desc.title);
+    const detailPage = await things[0].openDetailPage();
+    expect(detailPage).toBeTruthy();
+    const photoProperty = await detailPage.photoProperty();
+    expect(photoProperty).toBeTruthy();
+    await photoProperty.click();
+
+    await browser.waitUntil( async () => {
+
+      const el = await browser.$(".media-modal-image");
+      console.log(!el.error,el.error?.message);
+      
+      return !el.error
+    },{timeout: 6000000})
+    const img = await browser.$(".media-modal-image");
+    expect(img.getAttribute("src")).toBeTruthy();
+  });
 });
