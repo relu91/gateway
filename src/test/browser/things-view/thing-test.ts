@@ -1,8 +1,12 @@
 import { getBrowser } from '../browser-common';
+import express from 'express';
 import { addThing, escapeHtmlForIdClass, getProperty, setProperty } from '../test-utils';
 import { waitForExpect } from '../../expect-utils';
 import { ThingsPage } from '../page-object/things-page';
 import util from 'util';
+import path from 'path';
+import { AddressInfo } from 'net';
+import { Server } from 'http';
 
 describe('Thing', () => {
   it('should render an unknown thing and be able to change properties', async () => {
@@ -972,51 +976,115 @@ describe('Thing', () => {
     expect(detailPage).toBeTruthy();
   });
 
-  it('should render camera image and show image', async () => {
-    const browser = getBrowser();
-    const desc = {
-      id: 'Camera',
-      title: 'Camera',
-      '@context': 'https://webthings.io/schemas',
-      '@type': ['Camera'],
-      properties: {
-        photo: {
-          '@type': 'ImageProperty',
-          type: "null",
-          forms:[
-            {
-              
-              href:"https://fakeimg.pl/300/",
-              contentType: "image/jpg"
-            }
-          ]
+  describe('Assets based things', () =>{
+    let assetServer:Server;
+
+    beforeAll(async ()=>{
+      const app = express();
+      app.use("/assets", express.static(path.join(__dirname, "assets")));
+      assetServer = app.listen();
+
+      return new Promise((resolve, reject) => {
+        assetServer.once('listening', resolve)
+          .once('error', reject);
+      });
+    })
+
+    it('should render camera image and show image', async () => {
+      const browser = getBrowser();
+      const desc = {
+        id: 'Camera',
+        title: 'Camera',
+        '@context': 'https://webthings.io/schemas',
+        '@type': ['Camera'],
+        properties: {
+          photo: {
+            '@type': 'ImageProperty',
+            type: "null",
+            forms: [
+              {
+                href: `http://localhost:${(<AddressInfo>assetServer.address()!).port}/assets/image.png`,
+                contentType: "image/png"
+              }
+            ]
+          },
         },
-      },
-    };
-    await addThing(desc);
+      };
+      await addThing(desc);
+      const thingsPage = new ThingsPage(browser);
+      await thingsPage.open();
 
-    const thingsPage = new ThingsPage(browser);
-    await thingsPage.open();
+      await thingsPage.waitForThings();
+      const things = await thingsPage.things();
+      expect(things.length).toEqual(1);
+      const thingTitle = await things[0].thingTitle();
+      expect(thingTitle).toEqual(desc.title);
+      const detailPage = await things[0].openDetailPage();
+      expect(detailPage).toBeTruthy();
+      const photoProperty = await detailPage.photoProperty();
+      expect(photoProperty).toBeTruthy();
+      await photoProperty.click();
 
-    await thingsPage.waitForThings();
-    const things = await thingsPage.things();
-    expect(things.length).toEqual(1);
-    const thingTitle = await things[0].thingTitle();
-    expect(thingTitle).toEqual(desc.title);
-    const detailPage = await things[0].openDetailPage();
-    expect(detailPage).toBeTruthy();
-    const photoProperty = await detailPage.photoProperty();
-    expect(photoProperty).toBeTruthy();
-    await photoProperty.click();
+      await browser.waitUntil(async () => {
 
-    await browser.waitUntil( async () => {
+        const el = await browser.$(".media-modal-image");
+        console.log(!el.error, el.error?.message);
 
-      const el = await browser.$(".media-modal-image");
-      console.log(!el.error,el.error?.message);
-      
-      return !el.error
-    },{timeout: 6000000})
-    const img = await browser.$(".media-modal-image");
-    expect(img.getAttribute("src")).toBeTruthy();
-  });
+        return !el.error
+      }, { timeout: 6000000 })
+      const img = await browser.$(".media-modal-image");
+      expect(await img.getAttribute("src")).toBeTruthy()
+    });
+
+    it('should render video camera and show video', async () => {
+      const browser = getBrowser();
+      const desc = {
+        id: 'VideoCamera',
+        title: 'VideoCamera',
+        '@context': 'https://webthings.io/schemas',
+        '@type': ['VideoCamera'],
+        properties: {
+          photo: {
+            '@type': 'VideoProperty',
+            type: "null",
+            forms: [
+              {
+                href: `http://localhost:${(<AddressInfo>assetServer.address()!).port}/assets/image.png`,
+                contentType: "image/png"
+              }
+            ]
+          },
+        },
+      };
+      await addThing(desc);
+      const thingsPage = new ThingsPage(browser);
+      await thingsPage.open();
+
+      await thingsPage.waitForThings();
+      const things = await thingsPage.things();
+      expect(things.length).toEqual(1);
+      const thingTitle = await things[0].thingTitle();
+      expect(thingTitle).toEqual(desc.title);
+      const detailPage = await things[0].openDetailPage();
+      expect(detailPage).toBeTruthy();
+      const photoProperty = await detailPage.photoProperty();
+      expect(photoProperty).toBeTruthy();
+      await photoProperty.click();
+
+      await browser.waitUntil(async () => {
+
+        const el = await browser.$(".media-modal-image");
+        console.log(!el.error, el.error?.message);
+
+        return !el.error
+      }, { timeout: 6000000 })
+      const img = await browser.$(".media-modal-image");
+      expect(await img.getAttribute("src")).toBeTruthy()
+    });
+
+    afterAll(()=>{
+      assetServer.close()
+    })
+  })
+ 
 });
