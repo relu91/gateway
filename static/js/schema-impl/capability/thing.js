@@ -164,7 +164,7 @@ class Thing {
           }
         }
 
-        let href = property.forms[0]
+        let href = property.forms[0];
 
         if (!href) {
           continue;

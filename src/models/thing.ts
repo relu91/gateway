@@ -141,16 +141,15 @@ export default class Thing extends EventEmitter {
         }
 
         if (property.forms) {
-          property.forms = property.forms
-            .map((form) => {
-              //TODO: WebThingsIO non-standard keyword
-              if (form.proxy) {
-                delete form.proxy;
-                form.href = `${Constants.PROXY_PATH}/${encodeURIComponent(this.id)}${form.href}`;
-              }
+          property.forms = property.forms.map((form) => {
+            //TODO: WebThingsIO non-standard keyword
+            if (form.proxy) {
+              delete form.proxy;
+              form.href = `${Constants.PROXY_PATH}/${encodeURIComponent(this.id)}${form.href}`;
+            }
 
-              return form;
-            });
+            return form;
+          });
         } else {
           property.forms = [];
         }
@@ -227,15 +226,14 @@ export default class Thing extends EventEmitter {
       }
 
       if (action.forms) {
-        action.forms = action.forms
-          .map((form) => {
-            if (form.proxy) {
-              delete form.proxy;
-              form.href = `${Constants.PROXY_PATH}/${encodeURIComponent(this.id)}${form.href}`;
-            }
+        action.forms = action.forms.map((form) => {
+          if (form.proxy) {
+            delete form.proxy;
+            form.href = `${Constants.PROXY_PATH}/${encodeURIComponent(this.id)}${form.href}`;
+          }
 
-            return form;
-          });
+          return form;
+        });
       } else {
         action.forms = [];
       }
@@ -254,15 +252,14 @@ export default class Thing extends EventEmitter {
       }
 
       if (event.forms) {
-        event.forms = event.forms
-          .map((form) => {
-            if (form.proxy) {
-              delete form.proxy;
-              form.href = `${Constants.PROXY_PATH}/${encodeURIComponent(this.id)}${form.href}`;
-            }
+        event.forms = event.forms.map((form) => {
+          if (form.proxy) {
+            delete form.proxy;
+            form.href = `${Constants.PROXY_PATH}/${encodeURIComponent(this.id)}${form.href}`;
+          }
 
-            return form;
-          });
+          return form;
+        });
       } else {
         event.forms = [];
       }
@@ -635,16 +632,15 @@ export default class Thing extends EventEmitter {
         }
 
         if (property.forms) {
-          property.forms = property.forms
-            .map((form) => {
-              //TODO: WebThingsIO non-standard keyword
-              if (form.proxy) {
-                delete form.proxy;
-                form.href = `${Constants.PROXY_PATH}/${encodeURIComponent(this.id)}${form.href}`;
-              }
+          property.forms = property.forms.map((form) => {
+            //TODO: WebThingsIO non-standard keyword
+            if (form.proxy) {
+              delete form.proxy;
+              form.href = `${Constants.PROXY_PATH}/${encodeURIComponent(this.id)}${form.href}`;
+            }
 
-              return form;
-            });
+            return form;
+          });
         } else {
           property.forms = [];
         }
@@ -668,15 +664,14 @@ export default class Thing extends EventEmitter {
       }
 
       if (action.forms) {
-        action.forms = action.forms
-          .map((form) => {
-            if (form.proxy) {
-              delete form.proxy;
-              form.href = `${Constants.PROXY_PATH}/${encodeURIComponent(this.id)}${form.href}`;
-            }
+        action.forms = action.forms.map((form) => {
+          if (form.proxy) {
+            delete form.proxy;
+            form.href = `${Constants.PROXY_PATH}/${encodeURIComponent(this.id)}${form.href}`;
+          }
 
-            return form;
-          });
+          return form;
+        });
       } else {
         action.forms = [];
       }
@@ -697,16 +692,15 @@ export default class Thing extends EventEmitter {
       }
 
       if (event.forms) {
-        event.forms = event.forms
-          .map((form) => {
-            //TODO: WebThingsIO non-standard keyword
-            if (form.proxy) {
-              delete form.proxy;
-              form.href = `${Constants.PROXY_PATH}/${encodeURIComponent(this.id)}${form.href}`;
-            }
+        event.forms = event.forms.map((form) => {
+          //TODO: WebThingsIO non-standard keyword
+          if (form.proxy) {
+            delete form.proxy;
+            form.href = `${Constants.PROXY_PATH}/${encodeURIComponent(this.id)}${form.href}`;
+          }
 
-            return form;
-          });
+          return form;
+        });
       } else {
         event.forms = [];
       }

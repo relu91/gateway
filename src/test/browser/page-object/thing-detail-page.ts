@@ -131,9 +131,8 @@ class OnOffPropertySection extends InputPropertySection {
 }
 
 abstract class ClickablePropertySection extends InputPropertySection {
-
   abstract click(): Promise<void>;
-  
+
   async waitForClickable(): Promise<void> {
     const element = this.rootElement!;
     await this.browser.waitUntil(
@@ -149,7 +148,6 @@ abstract class ClickablePropertySection extends InputPropertySection {
       { timeout: 5000 }
     );
   }
-  
 }
 
 class BooleanPropertySection extends ClickablePropertySection {
@@ -211,7 +209,6 @@ class NumberPropertySection extends InputPropertySection {
 }
 
 class PhotoPropertySection extends ClickablePropertySection {
-
   async click(): Promise<void> {
     await this.waitForClickable();
     await this.browser.execute(`(function () {

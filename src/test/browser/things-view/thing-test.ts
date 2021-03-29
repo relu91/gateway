@@ -976,19 +976,18 @@ describe('Thing', () => {
     expect(detailPage).toBeTruthy();
   });
 
-  describe('Assets based things', () =>{
-    let assetServer:Server;
+  describe('Assets based things', () => {
+    let assetServer: Server;
 
-    beforeAll(async ()=>{
+    beforeAll(async () => {
       const app = express();
-      app.use("/assets", express.static(path.join(__dirname, "assets")));
+      app.use('/assets', express.static(path.join(__dirname, 'assets')));
       assetServer = app.listen();
 
       return new Promise((resolve, reject) => {
-        assetServer.once('listening', resolve)
-          .once('error', reject);
+        assetServer.once('listening', resolve).once('error', reject);
       });
-    })
+    });
 
     it('should render camera image and show image', async () => {
       const browser = getBrowser();
@@ -1000,13 +999,15 @@ describe('Thing', () => {
         properties: {
           photo: {
             '@type': 'ImageProperty',
-            type: "null",
+            type: 'null',
             forms: [
               {
-                href: `http://localhost:${(<AddressInfo>assetServer.address()!).port}/assets/image.png`,
-                contentType: "image/png"
-              }
-            ]
+                href: `http://localhost:${
+                  (<AddressInfo>assetServer.address()!).port
+                }/assets/image.png`,
+                contentType: 'image/png',
+              },
+            ],
           },
         },
       };
@@ -1025,15 +1026,17 @@ describe('Thing', () => {
       expect(photoProperty).toBeTruthy();
       await photoProperty.click();
 
-      await browser.waitUntil(async () => {
+      await browser.waitUntil(
+        async () => {
+          const el = await browser.$('.media-modal-image');
+          console.log(!el.error, el.error?.message);
 
-        const el = await browser.$(".media-modal-image");
-        console.log(!el.error, el.error?.message);
-
-        return !el.error
-      }, { timeout: 6000000 })
-      const img = await browser.$(".media-modal-image");
-      expect(await img.getAttribute("src")).toBeTruthy()
+          return !el.error;
+        },
+        { timeout: 6000000 }
+      );
+      const img = await browser.$('.media-modal-image');
+      expect(await img.getAttribute('src')).toBeTruthy();
     });
 
     it('should render video camera and show video', async () => {
@@ -1046,13 +1049,15 @@ describe('Thing', () => {
         properties: {
           photo: {
             '@type': 'VideoProperty',
-            type: "null",
+            type: 'null',
             forms: [
               {
-                href: `http://localhost:${(<AddressInfo>assetServer.address()!).port}/assets/image.png`,
-                contentType: "image/png"
-              }
-            ]
+                href: `http://localhost:${
+                  (<AddressInfo>assetServer.address()!).port
+                }/assets/image.png`,
+                contentType: 'image/png',
+              },
+            ],
           },
         },
       };
@@ -1071,20 +1076,21 @@ describe('Thing', () => {
       expect(photoProperty).toBeTruthy();
       await photoProperty.click();
 
-      await browser.waitUntil(async () => {
+      await browser.waitUntil(
+        async () => {
+          const el = await browser.$('.media-modal-image');
+          console.log(!el.error, el.error?.message);
 
-        const el = await browser.$(".media-modal-image");
-        console.log(!el.error, el.error?.message);
-
-        return !el.error
-      }, { timeout: 6000000 })
-      const img = await browser.$(".media-modal-image");
-      expect(await img.getAttribute("src")).toBeTruthy()
+          return !el.error;
+        },
+        { timeout: 6000000 }
+      );
+      const img = await browser.$('.media-modal-image');
+      expect(await img.getAttribute('src')).toBeTruthy();
     });
 
-    afterAll(()=>{
-      assetServer.close()
-    })
-  })
- 
+    afterAll(() => {
+      assetServer.close();
+    });
+  });
 });

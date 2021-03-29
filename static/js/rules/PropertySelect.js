@@ -368,7 +368,7 @@ class PropertySelect {
         property.name = propName;
       }
 
-      const forms = property.forms || []
+      const forms = property.forms || [];
       if (forms.length === 0) {
         continue;
       }

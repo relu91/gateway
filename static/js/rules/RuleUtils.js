@@ -34,7 +34,7 @@ const RuleUtils = {
       property.id
     )}`;
     const optProp = option.properties[property.id];
-    return optProp && optProp.forms &&  optProp.forms.length;
+    return optProp && optProp.forms && optProp.forms.length;
   },
   // Helper function for selecting the thing corresponding to an href
   byThing: (thing) => (otherThing) => {

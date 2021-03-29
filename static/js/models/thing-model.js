@@ -194,7 +194,7 @@ class ThingModel extends Model {
       [name]: value,
     };
 
-    let href = property.forms[0]
+    let href = property.forms[0];
 
     return API.putJson(href, payload)
       .then((json) => {
@@ -213,8 +213,8 @@ class ThingModel extends Model {
     let getPropertiesPromise;
     if (typeof this.propertiesHref === 'undefined') {
       const urls = Object.values(this.propertyDescriptions).map((v) => {
-        if(v.forms){
-           return v.forms[0]
+        if (v.forms) {
+          return v.forms[0];
         }
       });
       const requests = urls.map((u) => API.getJson(u));
