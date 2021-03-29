@@ -164,12 +164,7 @@ class Thing {
           }
         }
 
-        let href;
-        for (const form of property.forms) {
-            href = form.href           
-            break;
-          
-        }
+        let href = property.forms[0]
 
         if (!href) {
           continue;
