@@ -30,9 +30,7 @@ const RuleUtils = {
       console.warn('byProperty property undefined', new Error().stack);
       return false;
     }
-    const propHref = `/things/${encodeURIComponent(property.thing)}/properties/${encodeURIComponent(
-      property.id
-    )}`;
+
     const optProp = option.properties[property.id];
     return optProp && optProp.forms && optProp.forms.length;
   },

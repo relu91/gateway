@@ -142,7 +142,7 @@ export default class Thing extends EventEmitter {
 
         if (property.forms) {
           property.forms = property.forms.map((form) => {
-            //TODO: WebThingsIO non-standard keyword
+            // TODO: WebThingsIO non-standard keyword
             if (form.proxy) {
               delete form.proxy;
               form.href = `${Constants.PROXY_PATH}/${encodeURIComponent(this.id)}${form.href}`;
@@ -633,7 +633,7 @@ export default class Thing extends EventEmitter {
 
         if (property.forms) {
           property.forms = property.forms.map((form) => {
-            //TODO: WebThingsIO non-standard keyword
+            // TODO: WebThingsIO non-standard keyword
             if (form.proxy) {
               delete form.proxy;
               form.href = `${Constants.PROXY_PATH}/${encodeURIComponent(this.id)}${form.href}`;
@@ -693,7 +693,7 @@ export default class Thing extends EventEmitter {
 
       if (event.forms) {
         event.forms = event.forms.map((form) => {
-          //TODO: WebThingsIO non-standard keyword
+          // TODO: WebThingsIO non-standard keyword
           if (form.proxy) {
             delete form.proxy;
             form.href = `${Constants.PROXY_PATH}/${encodeURIComponent(this.id)}${form.href}`;

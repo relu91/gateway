@@ -1088,21 +1088,24 @@ describe('Thing', () => {
 
       const videoElement = await browser.$('.media-modal-video');
       const result = await videoElement.executeAsync(function (done) {
-        // browser context
-        
-        let video = document.querySelector(".media-modal-video");
-        //@ts-ignore
-        video.addEventListener("error", function (error) {
-          done(error)
-        })
+        // Browser context disabling unwanted ts features
+        /* eslint-disable @typescript-eslint/ban-ts-comment, no-undefined */
+        const video = document.querySelector('.media-modal-video');
+        // @ts-ignore
+        video.addEventListener('error', function (error) {
+          done(error);
+        });
 
-        //@ts-ignore
-        video.addEventListener("playing", function (error) {
+        // @ts-ignore
+        video.addEventListener('playing', function () {
           done(undefined);
-        })
-        //reload the src to capture possible errors
-        //@ts-ignore
-        video.play().catch( e => { done(e)})
+        });
+
+        // @ts-ignore
+        video.play().catch((e) => {
+          done(e);
+        });
+        /* eslint-enable @typescript-eslint/ban-ts-comment, no-undefined */
       });
       expect(result).toBeUndefined();
     });

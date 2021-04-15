@@ -28,16 +28,16 @@ class VideoDetail {
     this.player = null;
 
     for (const form of property.forms) {
-        if (this.dashHref === null && form.contentType === 'application/dash+xml') {
-          this.dashHref = form.href;
-        } else if (this.hlsHref === null && form.contentType === 'application/vnd.apple.mpegurl') {
-          this.hlsHref = form.href;
-        } else if (
-          this.mjpegHref === null &&
+      if (this.dashHref === null && form.contentType === 'application/dash+xml') {
+        this.dashHref = form.href;
+      } else if (this.hlsHref === null && form.contentType === 'application/vnd.apple.mpegurl') {
+        this.hlsHref = form.href;
+      } else if (
+        this.mjpegHref === null &&
           (form.contentType === 'video/x-motion-jpeg' || form.contentType === 'video/x-jpeg')
-        ) {
-          this.mjpegHref = form.href;
-        }
+      ) {
+        this.mjpegHref = form.href;
+      }
     }
 
     this.expandVideo = this._expandVideo.bind(this);

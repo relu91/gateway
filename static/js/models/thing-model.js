@@ -194,7 +194,7 @@ class ThingModel extends Model {
       [name]: value,
     };
 
-    let href = property.forms[0].href;
+    const href = property.forms[0].href;
 
     return API.putJson(href, payload)
       .then((json) => {
