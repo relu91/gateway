@@ -1047,20 +1047,21 @@ describe('Thing', () => {
         '@context': 'https://webthings.io/schemas',
         '@type': ['VideoCamera'],
         properties: {
-          photo: {
+          video: {
             '@type': 'VideoProperty',
             type: 'null',
             forms: [
               {
                 href: `http://localhost:${
                   (<AddressInfo>assetServer.address()!).port
-                }/assets/image.png`,
-                contentType: 'image/png',
+                }/assets/test.m3u8`,
+                contentType: 'application/vnd.apple.mpegurl',
               },
             ],
           },
         },
       };
+
       await addThing(desc);
       const thingsPage = new ThingsPage(browser);
       await thingsPage.open();
@@ -1071,22 +1072,39 @@ describe('Thing', () => {
       const thingTitle = await things[0].thingTitle();
       expect(thingTitle).toEqual(desc.title);
       const detailPage = await things[0].openDetailPage();
+
       expect(detailPage).toBeTruthy();
-      const photoProperty = await detailPage.photoProperty();
-      expect(photoProperty).toBeTruthy();
-      await photoProperty.click();
+      const videoProperty = await detailPage.videoProperty();
+      expect(videoProperty).toBeTruthy();
+      await videoProperty.click();
 
       await browser.waitUntil(
         async () => {
-          const el = await browser.$('.media-modal-image');
-          console.log(!el.error, el.error?.message);
-
+          const el = await browser.$('.media-modal-video');
           return !el.error;
         },
         { timeout: 6000000 }
       );
-      const img = await browser.$('.media-modal-image');
-      expect(await img.getAttribute('src')).toBeTruthy();
+
+      const videoElement = await browser.$('.media-modal-video');
+      const result = await videoElement.executeAsync(function (done) {
+        // browser context
+        
+        let video = document.querySelector(".media-modal-video");
+        //@ts-ignore
+        video.addEventListener("error", function (error) {
+          done(error)
+        })
+
+        //@ts-ignore
+        video.addEventListener("playing", function (error) {
+          done(undefined);
+        })
+        //reload the src to capture possible errors
+        //@ts-ignore
+        video.play().catch( e => { done(e)})
+      });
+      expect(result).toBeUndefined();
     });
 
     afterAll(() => {

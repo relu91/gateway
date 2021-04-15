@@ -218,6 +218,16 @@ class PhotoPropertySection extends ClickablePropertySection {
   }
 }
 
+class VideoPropertySection extends ClickablePropertySection {
+  async click(): Promise<void> {
+    await this.waitForClickable();
+    await this.browser.execute(`(function () {
+      const el = document.querySelector('webthing-video-property')
+      el.click();
+    })()`);
+  }
+}
+
 export class ThingDetailPage extends Page {
   constructor(browser: WebdriverIO.Browser, url: string) {
     super(browser, url);
@@ -258,6 +268,7 @@ export class ThingDetailPage extends Page {
     );
     // For cameras
     this.defineSection('photoProperty', 'webthing-image-property', PhotoPropertySection);
+    this.defineSection('videoProperty', 'webthing-video-property', VideoPropertySection);
     // For UnknownThing
     this.defineSections('booleanProperties', 'webthing-boolean-property', BooleanPropertySection);
     this.defineSections('stringProperties', 'webthing-string-property', StringPropertySection);

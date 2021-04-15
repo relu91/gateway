@@ -28,7 +28,6 @@ class VideoDetail {
     this.player = null;
 
     for (const form of property.forms) {
-      if (form.rel === 'alternate') {
         if (this.dashHref === null && form.contentType === 'application/dash+xml') {
           this.dashHref = form.href;
         } else if (this.hlsHref === null && form.contentType === 'application/vnd.apple.mpegurl') {
@@ -39,7 +38,6 @@ class VideoDetail {
         ) {
           this.mjpegHref = form.href;
         }
-      }
     }
 
     this.expandVideo = this._expandVideo.bind(this);
