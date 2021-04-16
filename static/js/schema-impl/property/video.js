@@ -34,7 +34,7 @@ class VideoDetail {
         this.hlsHref = form.href;
       } else if (
         this.mjpegHref === null &&
-          (form.contentType === 'video/x-motion-jpeg' || form.contentType === 'video/x-jpeg')
+        (form.contentType === 'video/x-motion-jpeg' || form.contentType === 'video/x-jpeg')
       ) {
         this.mjpegHref = form.href;
       }
