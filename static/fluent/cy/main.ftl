@@ -64,8 +64,8 @@ network-settings-ethernet-image =
     .alt = Ether-rwyd
 network-settings-ethernet = Ether-rwyd
 network-settings-wifi-image =
-    .alt = Diwifr
-network-settings-wifi = Diwifr
+    .alt = Wi-Fi
+network-settings-wifi = Wi-Fi
 network-settings-configure = Ffurfweddu
 network-settings-ip-address = Cyfeiriad IP
 network-settings-dhcp = Awtomatig (DHCP)
@@ -80,10 +80,10 @@ network-settings-show-password = Dangos cyfrinair
 network-settings-connect = Cysylltu
 wireless-connected = Wedi cysylltu
 wireless-icon =
-    .alt = Rhwydwaith Diwifr
+    .alt = Rhwydwaith Wi-Fi
 network-settings-changing = Newid gosodiadau'r rhwydwaith. Gall hyn gymryd peth amser.
 failed-ethernet-configure = Wedi methu ffurfweddu'r ether-rwyd.
-failed-wifi-configure = Wedi methu ffurfweddu'r diwifr.
+failed-wifi-configure = Wedi methu ffurfweddu'r Wi-Fi.
 
 ## User Settings
 
@@ -499,7 +499,7 @@ authorizations = Awdurdodi
 developer = Datblygwr
 network = Rhwydwaith
 ethernet = Ether-rwyd
-wifi = Diwifr
+wifi = Wi-Fi
 icon = Eicon
 
 ## Errors
@@ -578,24 +578,24 @@ local-token-copy-token = Copïwch y Tocyn
 
 ## Wi-Fi Setup Page
 
-wifi-setup-title = Gosodiad Diwifr- { -webthings-gateway-brand }
-wifi-setup-header = Cysylltu â rhwydwaith diwifr?
+wifi-setup-title = Gosodiad Wi-Fi — { -webthings-gateway-brand }
+wifi-setup-header = Cysylltu â rhwydwaith Wi-Fi?
 wifi-setup-input-password =
     .placeholder = Cyfrinair
 wifi-setup-show-password = Dangos cyfrinair
 wifi-setup-connect =
     .value = Cysylltu
 wifi-setup-network-icon =
-    .alt = Rhwydwaith Diwifr
+    .alt = Rhwydwaith Wi-Fi
 wifi-setup-skip = Hepgor
 
 ## Connecting to Wi-Fi Page
 
-connecting-title = Yn cysylltu â'r diwifr - { -webthings-gateway-brand }
-connecting-header = Cysylltu â'r diwifr…
+connecting-title = Yn cysylltu â'r Wi-Fi — { -webthings-gateway-brand }
+connecting-header = Cysylltu â'r Wi-Fi…
 connecting-connect = Sicrhewch eich bod wedi'ch cysylltu â'r un rhwydwaith ac yna llywio i { $gateway-link } yn eich porwr gwe i barhau'r gosod.
 connecting-warning = Sylw: Os nad ydych yn gallu llwytho { $domain }, chwiliwch am gyfeiriad IP y porth ar eich llwybrydd.
-connecting-header-skipped = Hepgor cam gosod y diwifr
+connecting-header-skipped = Hepgor cam gosod y Wi-Fi
 connecting-skipped = Mae'r porth nawr yn cael ei gychwyn. Yn eich porwr gwe, ewch i { $gateway-link } tra ar yr un  rhwydwaith â'r porth i barhau'r gosod.
 
 ## Creating Wi-Fi Network Page
