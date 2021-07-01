@@ -249,6 +249,7 @@ add-thing-cancel = Отмена
 context-menu-choose-icon = Выберите значок…
 context-menu-save = Сохранить
 context-menu-remove = Удалить
+context-menu-show-on-floorplan = Показать на плане этажа?
 
 ## Capabilities
 
@@ -420,6 +421,8 @@ new-thing-password =
 new-thing-credentials-error = Неверные учётные данные
 new-thing-saved = Сохранено
 new-thing-done = Готово
+add-group = Добавить новую группу
+new-group-save = Создать
 
 ## New Web Thing View
 

@@ -249,6 +249,7 @@ add-thing-cancel = 取消
 context-menu-choose-icon = 选择图标...
 context-menu-save = 保存
 context-menu-remove = 移除
+context-menu-show-on-floorplan = 要显示在楼层平面图中？
 
 ## Capabilities
 
@@ -413,6 +414,8 @@ new-thing-password =
 new-thing-credentials-error = 凭据不正确
 new-thing-saved = 已保存
 new-thing-done = 完成
+add-group = 新建群组
+new-group-save = 创建
 
 ## New Web Thing View
 

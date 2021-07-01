@@ -78,7 +78,7 @@ network-settings-wifi-password =
     .placeholder = Contrasigno
 network-settings-show-password = Monstrar contrasigno
 network-settings-connect = Connecter
-wireless-connected = Connexe
+wireless-connected = Connectite
 wireless-icon =
     .alt = Rete Wi-Fi
 network-settings-changing = Cambio parametros de rete. Isto pote prender un minuta.
@@ -249,6 +249,7 @@ add-thing-cancel = Cancellar
 context-menu-choose-icon = Elige icone…
 context-menu-save = Salvar
 context-menu-remove = Remover
+context-menu-show-on-floorplan = Monstrar un vista in planimetria?
 
 ## Capabilities
 
@@ -413,6 +414,8 @@ new-thing-password =
 new-thing-credentials-error = Credentiales incorrecte
 new-thing-saved = Salvate
 new-thing-done = Facite
+add-group = Adder un nove gruppo
+new-group-save = Crear
 
 ## New Web Thing View
 
@@ -586,7 +589,7 @@ ellipsis = …
 event-log = Registro eventos
 edit = Rediger
 remove = Remover
-disconnected = Disconnexe
+disconnected = Disconnectite
 processing = Processante…
 submit = Inviar
 

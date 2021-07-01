@@ -249,6 +249,7 @@ add-thing-cancel = Avbryt
 context-menu-choose-icon = Välj ikon…
 context-menu-save = Spara
 context-menu-remove = Ta bort
+context-menu-show-on-floorplan = Visa i planlösningsvy?
 
 ## Capabilities
 
@@ -413,6 +414,8 @@ new-thing-password =
 new-thing-credentials-error = Felaktiga inloggningsuppgifter
 new-thing-saved = Sparad
 new-thing-done = Klar
+add-group = Lägg till ny grupp
+new-group-save = Skapa
 
 ## New Web Thing View
 

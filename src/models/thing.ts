@@ -42,6 +42,7 @@ export interface ThingDescription {
   actions: Record<string, ActionSchema>;
   events: Record<string, EventSchema>;
   links: Link[];
+  floorplanVisibility: boolean;
   floorplanX: number;
   floorplanY: number;
   layoutIndex: number;
@@ -50,6 +51,7 @@ export interface ThingDescription {
   iconData: IconData;
   security: string;
   securityDefinitions: SecurityDefinition;
+  group_id: string | null;
 }
 
 interface IconData {
@@ -92,6 +94,8 @@ export default class Thing extends EventEmitter {
 
   private eventsDispatched: Event[];
 
+  private floorplanVisibility: boolean;
+
   private floorplanX: number;
 
   private floorplanY: number;
@@ -103,6 +107,8 @@ export default class Thing extends EventEmitter {
   private links: Link[];
 
   private iconHref: string | null;
+
+  private group_id: string | null;
 
   /**
    * Thing constructor.
@@ -163,6 +169,7 @@ export default class Thing extends EventEmitter {
         this.properties[propertyName] = property;
       }
     }
+    this.floorplanVisibility = description.floorplanVisibility;
     this.floorplanX = description.floorplanX;
     this.floorplanY = description.floorplanY;
     this.layoutIndex = description.layoutIndex;
@@ -277,6 +284,8 @@ export default class Thing extends EventEmitter {
     } else if (description.iconData) {
       this.setIcon(description.iconData, false);
     }
+
+    this.group_id = description.group_id || null;
   }
 
   getId(): string {
@@ -291,12 +300,30 @@ export default class Thing extends EventEmitter {
     return this.layoutIndex;
   }
 
+  getGroup(): string | null {
+    return this.group_id;
+  }
+
   getHref(): string {
     return this.href;
   }
 
   getProperties(): Record<string, PropertySchema> {
     return this.properties;
+  }
+
+  /**
+   * Set the visibility of a Thing on the floorplan.
+   *
+   * @param {boolean} visibility Whether or not to include in the floorplan view.
+   * @return {Promise} A promise which resolves with the description set.
+   */
+  setFloorplanVisibility(visibility: boolean): Promise<ThingDescription> {
+    this.floorplanVisibility = visibility;
+    return Database.updateThing(this.id, this.getDescription()).then((descr) => {
+      this.emit(Constants.MODIFIED);
+      return descr;
+    });
   }
 
   /**
@@ -324,7 +351,6 @@ export default class Thing extends EventEmitter {
   setLayoutIndex(index: number): Promise<ThingDescription> {
     this.layoutIndex = index;
     return Database.updateThing(this.id, this.getDescription()).then((descr) => {
-      this.emit(Constants.MODIFIED);
       return descr;
     });
   }
@@ -432,6 +458,19 @@ export default class Thing extends EventEmitter {
   }
 
   /**
+   * Set the group for a Thing in the overview.
+   *
+   * @param {string} group_id ID of the group
+   * @return {Promise} A promise which resolves with the description set.
+   */
+  setGroup(group_id: string | null): Promise<ThingDescription> {
+    this.group_id = group_id;
+    return Database.updateThing(this.id, this.getDescription()).then((descr) => {
+      return descr;
+    });
+  }
+
+  /**
    * Dispatch an event to all listeners subscribed to the Thing
    * @param {Event} event
    */
@@ -525,11 +564,13 @@ export default class Thing extends EventEmitter {
       actions: this.actions,
       events: this.events,
       links: JSON.parse(JSON.stringify(this.links)),
+      floorplanVisibility: this.floorplanVisibility,
       floorplanX: this.floorplanX,
       floorplanY: this.floorplanY,
       layoutIndex: this.layoutIndex,
       selectedCapability: this.selectedCapability,
       iconHref: this.iconHref,
+      group_id: this.group_id,
     } as ThingDescription;
 
     if (typeof reqHost !== 'undefined') {

@@ -249,6 +249,7 @@ add-thing-cancel = Скасувати
 context-menu-choose-icon = Вибрати піктограму…
 context-menu-save = Зберегти
 context-menu-remove = Вилучити
+context-menu-show-on-floorplan = Показати у вигляді плану поверху?
 
 ## Capabilities
 
@@ -420,6 +421,8 @@ new-thing-password =
 new-thing-credentials-error = Неправильні дані
 new-thing-saved = Збережено
 new-thing-done = Готово
+add-group = Додати нову групу
+new-group-save = Створити
 
 ## New Web Thing View
 

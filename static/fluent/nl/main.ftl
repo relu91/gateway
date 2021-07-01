@@ -249,6 +249,7 @@ add-thing-cancel = Annuleren
 context-menu-choose-icon = Pictogram kiezen…
 context-menu-save = Opslaan
 context-menu-remove = Verwijderen
+context-menu-show-on-floorplan = In plattegrondweergave tonen?
 
 ## Capabilities
 
@@ -413,6 +414,8 @@ new-thing-password =
 new-thing-credentials-error = Ongeldige aanmeldgegevens
 new-thing-saved = Opgeslagen
 new-thing-done = Klaar
+add-group = Nieuwe groep toevoegen
+new-group-save = Aanmaken
 
 ## New Web Thing View
 
