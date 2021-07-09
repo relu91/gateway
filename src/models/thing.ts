@@ -20,6 +20,7 @@ import {
   Event as EventSchema,
   Property as PropertySchema,
   Link,
+  Form,
 } from 'gateway-addon/lib/schema';
 import Action from './action';
 import Event from './event';
@@ -42,6 +43,7 @@ export interface ThingDescription {
   actions: Record<string, ActionSchema>;
   events: Record<string, EventSchema>;
   links: Link[];
+  forms: Form[];
   floorplanVisibility: boolean;
   floorplanX: number;
   floorplanY: number;
@@ -106,6 +108,8 @@ export default class Thing extends EventEmitter {
 
   private links: Link[];
 
+  private forms: Form[];
+
   private iconHref: string | null;
 
   private group_id: string | null;
@@ -169,16 +173,19 @@ export default class Thing extends EventEmitter {
         this.properties[propertyName] = property;
       }
     }
+
+    this.forms = [
+      {
+        href: `${this.href}/properties`,
+        op: ['readallproperties', 'writeallproperties'],
+      },
+    ];
     this.floorplanVisibility = description.floorplanVisibility;
     this.floorplanX = description.floorplanX;
     this.floorplanY = description.floorplanY;
     this.layoutIndex = description.layoutIndex;
     this.selectedCapability = description.selectedCapability;
     this.links = [
-      {
-        rel: 'properties',
-        href: `${this.href}/properties`,
-      },
       {
         rel: 'actions',
         href: `${this.href}/actions`,
@@ -564,6 +571,7 @@ export default class Thing extends EventEmitter {
       actions: this.actions,
       events: this.events,
       links: JSON.parse(JSON.stringify(this.links)),
+      forms: this.forms,
       floorplanVisibility: this.floorplanVisibility,
       floorplanX: this.floorplanX,
       floorplanY: this.floorplanY,
