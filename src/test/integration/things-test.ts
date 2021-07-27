@@ -208,7 +208,6 @@ describe('things/', function () {
     // eslint-disable-next-line max-len
     thingDescr.events.reboot.forms[0].href = `${Constants.PROXY_PATH}/${thingDescr.id}${thingDescr.events.reboot.forms[0].href}`;
     thingDescr.events.reboot.forms.push({
-      rel: 'event',
       href: `${Constants.THINGS_PATH}/${thingDescr.id}${Constants.EVENTS_PATH}/reboot`,
     });
 

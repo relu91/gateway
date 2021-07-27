@@ -280,7 +280,6 @@ export default class Thing extends EventEmitter {
 
       // Give the event a URL
       event.forms.push({
-        rel: 'event',
         href: `${this.href}${Constants.EVENTS_PATH}/${encodeURIComponent(eventName)}`,
       });
     }
@@ -756,7 +755,6 @@ export default class Thing extends EventEmitter {
 
       // Give the event a URL
       event.forms.push({
-        rel: 'event',
         href: `${this.href}${Constants.EVENTS_PATH}/${encodeURIComponent(eventName)}`,
       });
     }
