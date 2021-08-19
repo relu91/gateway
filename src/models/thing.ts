@@ -174,12 +174,25 @@ export default class Thing extends EventEmitter {
       }
     }
 
-    this.forms = [
-      {
+    this.forms = [];
+
+    // If there are properties, add a top level form for them
+    if (Object.keys(description.properties).length > 0) {
+      this.forms.push({
         href: `${this.href}/properties`,
-        op: ['readallproperties', 'writeallproperties'],
-      },
-    ];
+        op: Constants.READ_ALL_PROPERTIES_OP,
+      });
+    }
+
+    // If there are events, add a top level form for them
+    if (Object.keys(description.events).length > 0) {
+      this.forms.push({
+        href: `${this.href}/events`,
+        op: [Constants.SUBSCRIBE_ALL_EVENTS_OP, Constants.UNSUBSCRIBE_ALL_EVENTS_OP],
+        subprotocol: 'sse',
+      });
+    }
+
     this.floorplanVisibility = description.floorplanVisibility;
     this.floorplanX = description.floorplanX;
     this.floorplanY = description.floorplanY;
@@ -189,10 +202,6 @@ export default class Thing extends EventEmitter {
       {
         rel: 'actions',
         href: `${this.href}/actions`,
-      },
-      {
-        rel: 'events',
-        href: `${this.href}/events`,
       },
     ];
 
@@ -281,6 +290,7 @@ export default class Thing extends EventEmitter {
       // Give the event a URL
       event.forms.push({
         href: `${this.href}${Constants.EVENTS_PATH}/${encodeURIComponent(eventName)}`,
+        subprotocol: 'sse',
       });
     }
 
@@ -756,6 +766,26 @@ export default class Thing extends EventEmitter {
       // Give the event a URL
       event.forms.push({
         href: `${this.href}${Constants.EVENTS_PATH}/${encodeURIComponent(eventName)}`,
+        subprotocol: 'sse',
+      });
+    }
+
+    this.forms = [];
+
+    // If there are properties, add a top level form for them
+    if (Object.keys(description.properties).length > 0) {
+      this.forms.push({
+        href: `${this.href}/properties`,
+        op: Constants.READ_ALL_PROPERTIES_OP,
+      });
+    }
+
+    // If there are events, add a top level form for them
+    if (Object.keys(description.events).length > 0) {
+      this.forms.push({
+        href: `${this.href}/events`,
+        op: [Constants.SUBSCRIBE_ALL_EVENTS_OP, Constants.UNSUBSCRIBE_ALL_EVENTS_OP],
+        subprotocol: 'sse',
       });
     }
 
