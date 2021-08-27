@@ -141,6 +141,7 @@ export default class Thing extends EventEmitter {
     this.events = description.events || {};
     this.connected = false;
     this.eventsDispatched = [];
+    this.forms = [];
 
     if (description.properties) {
       for (const propertyName in description.properties) {
@@ -172,23 +173,24 @@ export default class Thing extends EventEmitter {
 
         this.properties[propertyName] = property;
       }
-    }
 
-    this.forms = [];
-
-    // If there are properties, add a top level form for them
-    if (Object.keys(description.properties).length > 0) {
-      this.forms.push({
-        href: `${this.href}/properties`,
-        op: Constants.READ_ALL_PROPERTIES_OP,
-      });
+      // If there are properties, add a top level form for them
+      if (Object.keys(description.properties).length > 0) {
+        this.forms.push({
+          href: `${this.href}/properties`,
+          op: Constants.WoTOperation.READ_ALL_PROPERTIES_OP,
+        });
+      }
     }
 
     // If there are events, add a top level form for them
-    if (Object.keys(description.events).length > 0) {
+    if (Object.keys(description.events ?? {}).length > 0) {
       this.forms.push({
         href: `${this.href}/events`,
-        op: [Constants.SUBSCRIBE_ALL_EVENTS_OP, Constants.UNSUBSCRIBE_ALL_EVENTS_OP],
+        op: [
+          Constants.WoTOperation.SUBSCRIBE_ALL_EVENTS_OP,
+          Constants.WoTOperation.UNSUBSCRIBE_ALL_EVENTS_OP,
+        ],
         subprotocol: 'sse',
       });
     }
@@ -678,7 +680,7 @@ export default class Thing extends EventEmitter {
 
     // Update description
     this.description = description.description || '';
-
+    this.forms = [];
     // Update properties
     this.properties = {};
     if (description.properties) {
@@ -709,6 +711,14 @@ export default class Thing extends EventEmitter {
           href: `${this.href}${Constants.PROPERTIES_PATH}/${encodeURIComponent(propertyName)}`,
         });
         this.properties[propertyName] = property;
+      }
+
+      // If there are properties, add a top level form for them
+      if (Object.keys(description.properties).length > 0) {
+        this.forms.push({
+          href: `${this.href}/properties`,
+          op: Constants.WoTOperation.READ_ALL_PROPERTIES_OP,
+        });
       }
     }
 
@@ -770,21 +780,14 @@ export default class Thing extends EventEmitter {
       });
     }
 
-    this.forms = [];
-
-    // If there are properties, add a top level form for them
-    if (Object.keys(description.properties).length > 0) {
-      this.forms.push({
-        href: `${this.href}/properties`,
-        op: Constants.READ_ALL_PROPERTIES_OP,
-      });
-    }
-
     // If there are events, add a top level form for them
-    if (Object.keys(description.events).length > 0) {
+    if (Object.keys(description.events ?? {}).length > 0) {
       this.forms.push({
         href: `${this.href}/events`,
-        op: [Constants.SUBSCRIBE_ALL_EVENTS_OP, Constants.UNSUBSCRIBE_ALL_EVENTS_OP],
+        op: [
+          Constants.WoTOperation.SUBSCRIBE_ALL_EVENTS_OP,
+          Constants.WoTOperation.UNSUBSCRIBE_ALL_EVENTS_OP,
+        ],
         subprotocol: 'sse',
       });
     }

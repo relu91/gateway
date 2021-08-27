@@ -40,10 +40,6 @@ export const STATIC_PATH = path.join(__dirname, '../static');
 export const BUILD_STATIC_PATH = path.join(__dirname, '../build/static');
 export const VIEWS_PATH = path.join(__dirname, '../build/views');
 
-export const READ_ALL_PROPERTIES_OP = 'readallproperties';
-export const SUBSCRIBE_ALL_EVENTS_OP = 'subscribeallevents';
-export const UNSUBSCRIBE_ALL_EVENTS_OP = 'unsubscribeallevents';
-
 // Plugin and REST/websocket API things
 export const ACTION_STATUS = 'actionStatus';
 export const ADAPTER_ADDED = 'adapterAdded';
@@ -86,6 +82,11 @@ export enum LogSeverity {
   PROMPT = 4,
 }
 
+export enum WoTOperation {
+  READ_ALL_PROPERTIES_OP = 'readallproperties',
+  SUBSCRIBE_ALL_EVENTS_OP = 'subscribeallevents',
+  UNSUBSCRIBE_ALL_EVENTS_OP = 'unsubscribeallevents',
+}
 export interface LogMessage {
   severity: LogSeverity;
   message: string;
