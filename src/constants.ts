@@ -82,6 +82,11 @@ export enum LogSeverity {
   PROMPT = 4,
 }
 
+export enum WoTOperation {
+  READ_ALL_PROPERTIES_OP = 'readallproperties',
+  SUBSCRIBE_ALL_EVENTS_OP = 'subscribeallevents',
+  UNSUBSCRIBE_ALL_EVENTS_OP = 'unsubscribeallevents',
+}
 export interface LogMessage {
   severity: LogSeverity;
   message: string;

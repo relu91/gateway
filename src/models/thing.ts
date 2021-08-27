@@ -141,6 +141,7 @@ export default class Thing extends EventEmitter {
     this.events = description.events || {};
     this.connected = false;
     this.eventsDispatched = [];
+    this.forms = [];
 
     if (description.properties) {
       for (const propertyName in description.properties) {
@@ -172,14 +173,28 @@ export default class Thing extends EventEmitter {
 
         this.properties[propertyName] = property;
       }
+
+      // If there are properties, add a top level form for them
+      if (Object.keys(description.properties).length > 0) {
+        this.forms.push({
+          href: `${this.href}/properties`,
+          op: Constants.WoTOperation.READ_ALL_PROPERTIES_OP,
+        });
+      }
     }
 
-    this.forms = [
-      {
-        href: `${this.href}/properties`,
-        op: ['readallproperties', 'writeallproperties'],
-      },
-    ];
+    // If there are events, add a top level form for them
+    if (Object.keys(description.events ?? {}).length > 0) {
+      this.forms.push({
+        href: `${this.href}/events`,
+        op: [
+          Constants.WoTOperation.SUBSCRIBE_ALL_EVENTS_OP,
+          Constants.WoTOperation.UNSUBSCRIBE_ALL_EVENTS_OP,
+        ],
+        subprotocol: 'sse',
+      });
+    }
+
     this.floorplanVisibility = description.floorplanVisibility;
     this.floorplanX = description.floorplanX;
     this.floorplanY = description.floorplanY;
@@ -189,10 +204,6 @@ export default class Thing extends EventEmitter {
       {
         rel: 'actions',
         href: `${this.href}/actions`,
-      },
-      {
-        rel: 'events',
-        href: `${this.href}/events`,
       },
     ];
 
@@ -281,6 +292,7 @@ export default class Thing extends EventEmitter {
       // Give the event a URL
       event.forms.push({
         href: `${this.href}${Constants.EVENTS_PATH}/${encodeURIComponent(eventName)}`,
+        subprotocol: 'sse',
       });
     }
 
@@ -668,7 +680,7 @@ export default class Thing extends EventEmitter {
 
     // Update description
     this.description = description.description || '';
-
+    this.forms = [];
     // Update properties
     this.properties = {};
     if (description.properties) {
@@ -699,6 +711,14 @@ export default class Thing extends EventEmitter {
           href: `${this.href}${Constants.PROPERTIES_PATH}/${encodeURIComponent(propertyName)}`,
         });
         this.properties[propertyName] = property;
+      }
+
+      // If there are properties, add a top level form for them
+      if (Object.keys(description.properties).length > 0) {
+        this.forms.push({
+          href: `${this.href}/properties`,
+          op: Constants.WoTOperation.READ_ALL_PROPERTIES_OP,
+        });
       }
     }
 
@@ -756,6 +776,19 @@ export default class Thing extends EventEmitter {
       // Give the event a URL
       event.forms.push({
         href: `${this.href}${Constants.EVENTS_PATH}/${encodeURIComponent(eventName)}`,
+        subprotocol: 'sse',
+      });
+    }
+
+    // If there are events, add a top level form for them
+    if (Object.keys(description.events ?? {}).length > 0) {
+      this.forms.push({
+        href: `${this.href}/events`,
+        op: [
+          Constants.WoTOperation.SUBSCRIBE_ALL_EVENTS_OP,
+          Constants.WoTOperation.UNSUBSCRIBE_ALL_EVENTS_OP,
+        ],
+        subprotocol: 'sse',
       });
     }
 
