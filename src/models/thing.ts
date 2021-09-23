@@ -177,19 +177,27 @@ export default class Thing extends EventEmitter {
       // If there are properties, add a top level form for them
       if (Object.keys(description.properties).length > 0) {
         this.forms.push({
-          href: `${this.href}/properties`,
-          op: Constants.WoTOperation.READ_ALL_PROPERTIES_OP,
+          href: `${this.href}${Constants.PROPERTIES_PATH}`,
+          op: Constants.WoTOperation.READ_ALL_PROPERTIES,
         });
       }
+    }
+
+    // If there are actions, add a top level form for them
+    if (Object.keys(description.actions ?? {}).length > 0) {
+      this.forms.push({
+        href: `${this.href}${Constants.ACTIONS_PATH}`,
+        op: Constants.WoTOperation.QUERY_ALL_ACTIONS,
+      });
     }
 
     // If there are events, add a top level form for them
     if (Object.keys(description.events ?? {}).length > 0) {
       this.forms.push({
-        href: `${this.href}/events`,
+        href: `${this.href}${Constants.EVENTS_PATH}`,
         op: [
-          Constants.WoTOperation.SUBSCRIBE_ALL_EVENTS_OP,
-          Constants.WoTOperation.UNSUBSCRIBE_ALL_EVENTS_OP,
+          Constants.WoTOperation.SUBSCRIBE_ALL_EVENTS,
+          Constants.WoTOperation.UNSUBSCRIBE_ALL_EVENTS,
         ],
         subprotocol: 'sse',
       });
@@ -200,12 +208,7 @@ export default class Thing extends EventEmitter {
     this.floorplanY = description.floorplanY;
     this.layoutIndex = description.layoutIndex;
     this.selectedCapability = description.selectedCapability;
-    this.links = [
-      {
-        rel: 'actions',
-        href: `${this.href}/actions`,
-      },
-    ];
+    this.links = [];
 
     const uiLink = {
       rel: 'alternate',
@@ -219,10 +222,6 @@ export default class Thing extends EventEmitter {
 
     if (description.hasOwnProperty('links')) {
       for (const link of description.links) {
-        if (['properties', 'actions', 'events'].includes(link.rel as string)) {
-          continue;
-        }
-
         if (link.rel === 'alternate' && link.mediaType === 'text/html') {
           if (link.proxy) {
             delete link.proxy;
@@ -716,8 +715,8 @@ export default class Thing extends EventEmitter {
       // If there are properties, add a top level form for them
       if (Object.keys(description.properties).length > 0) {
         this.forms.push({
-          href: `${this.href}/properties`,
-          op: Constants.WoTOperation.READ_ALL_PROPERTIES_OP,
+          href: `${this.href}${Constants.PROPERTIES_PATH}`,
+          op: Constants.WoTOperation.READ_ALL_PROPERTIES,
         });
       }
     }
@@ -780,13 +779,21 @@ export default class Thing extends EventEmitter {
       });
     }
 
+    // If there are actions, add a top level form for them
+    if (Object.keys(description.actions ?? {}).length > 0) {
+      this.forms.push({
+        href: `${this.href}${Constants.ACTIONS_PATH}`,
+        op: Constants.WoTOperation.QUERY_ALL_ACTIONS
+      });
+    }
+
     // If there are events, add a top level form for them
     if (Object.keys(description.events ?? {}).length > 0) {
       this.forms.push({
-        href: `${this.href}/events`,
+        href: `${this.href}${Constants.EVENTS_PATH}`,
         op: [
-          Constants.WoTOperation.SUBSCRIBE_ALL_EVENTS_OP,
-          Constants.WoTOperation.UNSUBSCRIBE_ALL_EVENTS_OP,
+          Constants.WoTOperation.SUBSCRIBE_ALL_EVENTS,
+          Constants.WoTOperation.UNSUBSCRIBE_ALL_EVENTS,
         ],
         subprotocol: 'sse',
       });
@@ -811,10 +818,6 @@ export default class Thing extends EventEmitter {
     // Update the UI href
     if (description.hasOwnProperty('links')) {
       for (const link of description.links) {
-        if (['properties', 'actions', 'events'].includes(link.rel as string)) {
-          continue;
-        }
-
         if (link.rel === 'alternate' && link.mediaType === 'text/html') {
           if (link.proxy) {
             delete link.proxy;
