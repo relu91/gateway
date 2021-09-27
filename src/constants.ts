@@ -86,7 +86,7 @@ export enum WoTOperation {
   READ_ALL_PROPERTIES = 'readallproperties',
   SUBSCRIBE_ALL_EVENTS = 'subscribeallevents',
   UNSUBSCRIBE_ALL_EVENTS = 'unsubscribeallevents',
-  QUERY_ALL_ACTIONS = 'queryallactions'
+  QUERY_ALL_ACTIONS = 'queryallactions',
 }
 export interface LogMessage {
   severity: LogSeverity;

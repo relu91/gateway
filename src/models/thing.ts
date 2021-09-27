@@ -783,7 +783,7 @@ export default class Thing extends EventEmitter {
     if (Object.keys(description.actions ?? {}).length > 0) {
       this.forms.push({
         href: `${this.href}${Constants.ACTIONS_PATH}`,
-        op: Constants.WoTOperation.QUERY_ALL_ACTIONS
+        op: Constants.WoTOperation.QUERY_ALL_ACTIONS,
       });
     }
 
